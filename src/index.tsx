@@ -17,6 +17,6 @@ const WatchConnection = NativeModules.WatchConnection
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return WatchConnection.multiply(a, b);
+export function activate() {
+  return WatchConnection.activate();
 }

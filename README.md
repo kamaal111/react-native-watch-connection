@@ -8,15 +8,7 @@ A package to make connections with your watch app
 npm install react-native-watch-connection
 ```
 
-## Usage
-
-```js
-import { multiply } from "react-native-watch-connection";
-
-// ...
-
-const result = await multiply(3, 7);
-```
+# WIP
 
 ## Contributing
 
