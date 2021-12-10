@@ -1,18 +1,23 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-watch-connection';
+import { subscribe } from 'react-native-watch-connection';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    subscribe(
+      (message) => {
+        console.log(`message`, message);
+      },
+      (error) => {
+        console.log(`error`, error);
+      }
+    );
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>Result 0</Text>
     </View>
   );
 }

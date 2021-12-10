@@ -12,11 +12,19 @@ import WatchConnectivity
 @objc(WatchConnection)
 class WatchConnection: NSObject, WCSessionDelegate {
 
-//    @objc(multiply:withB:withResolver:withRejecter:)
-//    func multiply(a: Float, b: Float, resolve: RCTPromiseResolveBlock,reject: RCTPromiseRejectBlock) -> Void {
-//        resolve(a*b)
-//    }
+    enum Events: String, CaseIterable {
+        case watchConnectionDidChange
+    }
+
     private var session: WCSession?
+
+    override static func requiresMainQueueSetup() -> Bool {
+        false
+    }
+
+    override func supportedEvents() -> [String]! {
+        Events.allCases.map(\.rawValue)
+    }
 
     @objc
     func activate() {
@@ -31,7 +39,7 @@ class WatchConnection: NSObject, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }
 
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print(message)
+        sendEvent(withName: Events.watchConnectionDidChange.rawValue, body: message)
     }
 
     #if os(iOS)
