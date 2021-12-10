@@ -10,7 +10,7 @@ import Foundation
 import WatchConnectivity
 
 @objc(WatchConnection)
-class WatchConnection: NSObject, WCSessionDelegate {
+class WatchConnection: RCTEventEmitter, WCSessionDelegate {
 
     enum Events: String, CaseIterable {
         case watchConnectionDidChange

@@ -5,7 +5,7 @@ import { subscribe } from 'react-native-watch-connection';
 
 export default function App() {
   React.useEffect(() => {
-    subscribe(
+    const subscription = subscribe(
       (message) => {
         console.log(`message`, message);
       },
@@ -13,6 +13,9 @@ export default function App() {
         console.log(`error`, error);
       }
     );
+    return () => {
+      subscription?.remove();
+    };
   }, []);
 
   return (

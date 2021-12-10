@@ -6,12 +6,12 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
-    "react-native-watch-connection": "file:.."
+    "start": "react-native start"
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.4"
+    "react-native": "0.63.4",
+    "react-native-watch-connection": "file:.."
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

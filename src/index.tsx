@@ -45,3 +45,5 @@ export function subscribe(
 
   return WatchConnectionEventEmitter.addListener(Events.DID_CHANGE, callback);
 }
+
+export default { subscribe };
