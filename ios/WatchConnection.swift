@@ -17,6 +17,9 @@ class WatchConnection: RCTEventEmitter, WCSessionDelegate {
     }
 
     private var session: WCSession?
+    private var lastMessage: CFAbsoluteTime = 0
+
+    private let watchConnectionErrorKey = "watch_connection_error"
 
     override static func requiresMainQueueSetup() -> Bool {
         false
@@ -27,13 +30,37 @@ class WatchConnection: RCTEventEmitter, WCSessionDelegate {
     }
 
     @objc
-    func activate() {
+    public func activate() {
         if WCSession.isSupported() {
             let session = WCSession.default
             session.delegate = self
             session.activate()
             self.session = session
         }
+    }
+
+    @objc
+    public func sendMessage(_ message: [String: Any], resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        guard let session = self.session else {
+            reject(watchConnectionErrorKey, "Watch connection is not activated", nil)
+            return
+        }
+
+        if lastMessage + 0.5 > CFAbsoluteTimeGetCurrent() {
+            reject(watchConnectionErrorKey, "Too many messages sent too quickly", nil)
+            return
+        }
+
+        guard session.isReachable else {
+            reject(watchConnectionErrorKey, "Watch is not reachable", nil)
+            return
+        }
+
+        session.sendMessage(message, replyHandler: { (reply) in
+            resolve(reply)
+        }, errorHandler: { error in
+            reject(self.watchConnectionErrorKey, error.localizedDescription, error)
+        })
     }
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }

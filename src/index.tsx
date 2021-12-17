@@ -46,4 +46,12 @@ export function subscribe(
   return WatchConnectionEventEmitter.addListener(Events.DID_CHANGE, callback);
 }
 
-export default { subscribe };
+interface Message {
+  [x: string]: any;
+}
+
+export async function sendMessage(message: Message): Promise<Message> {
+  return WatchConnection.sendMessage(message);
+}
+
+export default { subscribe, sendMessage };
