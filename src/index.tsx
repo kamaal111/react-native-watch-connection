@@ -32,8 +32,12 @@ function activate() {
 
 function noop() {}
 
+interface Message {
+  [x: string]: any;
+}
+
 export function subscribe(
-  callback: (event: any) => void,
+  callback: (event: Message) => void,
   error: (_err: Error) => void = noop
 ) {
   activate();
@@ -44,10 +48,6 @@ export function subscribe(
   }
 
   return WatchConnectionEventEmitter.addListener(Events.DID_CHANGE, callback);
-}
-
-interface Message {
-  [x: string]: any;
 }
 
 export async function sendMessage(message: Message): Promise<Message> {
