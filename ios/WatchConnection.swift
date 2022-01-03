@@ -56,11 +56,7 @@ class WatchConnection: RCTEventEmitter, WCSessionDelegate {
             return
         }
 
-        session.sendMessage(message, replyHandler: { (reply) in
-            resolve(reply)
-        }, errorHandler: { error in
-            reject(self.watchConnectionErrorKey, error.localizedDescription, error)
-        })
+        session.sendMessage(message, replyHandler: nil)
     }
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }
